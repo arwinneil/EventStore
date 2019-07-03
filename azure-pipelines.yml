@@ -10,6 +10,7 @@ jobs:
     vmImage: 'windows-2019'
 
   steps:
-    - task: CmdLine@2
-      inputs:
-        script: 'scripts\build-windows\build.ps1  quick -Platform x64 -SpecificVisualStudioVersion 2019 -Configuration release -Version ($env:SemanticVersion)'
+  - task: PowerShell@2
+    inputs:
+      filePath: './scriptsbuild-windows/build.ps1'
+      arguments: 'quick -Platform x64 -SpecificVisualStudioVersion 2019 -Configuration release -Version ($env:SemanticVersion)'
