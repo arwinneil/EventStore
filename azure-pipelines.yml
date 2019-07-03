@@ -12,5 +12,5 @@ jobs:
   steps:
   - task: PowerShell@2
     inputs:
-      filePath: './scriptsbuild-windows/build.ps1'
+      filePath: './scripts/build-windows/build.ps1'
       arguments: 'quick -Platform x64 -SpecificVisualStudioVersion 2019 -Configuration release -Version ($env:SemanticVersion)'
