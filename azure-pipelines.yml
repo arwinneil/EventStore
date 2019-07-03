@@ -22,8 +22,8 @@ jobs:
   - task: PowerShell@2
     displayName: Packaging
     inputs:
-      filePath: 'scripts\package-windows\package-windows.ps1'
-      arguments: '.\scripts\package-windows\package-windows.ps1 -Version ($env:SemanticVersion)'
+      filePath: '$(Build.SourcesDirectory)\scripts\package-windows\package-windows.ps1'
+      arguments: '-Version ($env:SemanticVersion)'
 
   - task: CmdLine@2
     displayName: Checkout v4-master branch
