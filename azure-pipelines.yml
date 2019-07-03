@@ -9,7 +9,7 @@ resources:
 jobs:
 - job: windows_release
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'vs2015-win2012r2'
 
   steps:
   - task: CmdLine@2
@@ -18,4 +18,4 @@ jobs:
   - task: PowerShell@2
     inputs:
       filePath: '$(Build.SourcesDirectory)\scripts\build-windows\build.ps1'
-      arguments: 'quick -Platform x64 -SpecificVisualStudioVersion 2019 -Configuration release -Version ($env:SemanticVersion)'
+      arguments: 'quick -Platform x64 -SpecificVisualStudioVersion 2015 -Configuration release -Version ($env:SemanticVersion)'
