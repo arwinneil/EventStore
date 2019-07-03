@@ -12,11 +12,24 @@ jobs:
     displayName: Checkout v4-master branch
     inputs:
       script: 'git checkout v4-master'
+      
   - task: PowerShell@2
     displayName: Compile
     inputs:
       filePath: '$(Build.SourcesDirectory)\scripts\build-windows\build.ps1'
       arguments: 'quick -Platform x64 -SpecificVisualStudioVersion 2015 -Configuration release -Version ($env:SemanticVersion)'
+
+  - task: PowerShell@2
+    displayName: Packaging
+    inputs:
+      filePath: 'scripts\package-windows\package-windows.ps1'
+      arguments: '.\scripts\package-windows\package-windows.ps1 -Version ($env:SemanticVersion)'
+
+  - task: CmdLine@2
+    displayName: Checkout v4-master branch
+    inputs:
+      script: 'DIR'
+      
   - task: PublishBuildArtifacts@1
     displayName: Publish Artifacts
     inputs:
