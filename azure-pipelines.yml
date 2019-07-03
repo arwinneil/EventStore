@@ -1,3 +1,6 @@
+trigger:
+- v4-master
+
 resources:
 - repo: self
 
