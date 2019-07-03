@@ -7,9 +7,9 @@ resources:
 jobs:
 - job: windows_release
   pool:
-    vmImage: 'ubuntu-latest'
+    vmImage: 'windows-2019'
 
   steps:
     - task: CmdLine@2
       inputs:
-        script: '.\build.cmd quick -Platform x64  -Configuration release -Version ($env:SemanticVersion)'
+        script: '.\build.cmd quick -Platform x64 -SpecificVisualStudioVersion 2015 -Configuration release -Version ($env:SemanticVersion)'
