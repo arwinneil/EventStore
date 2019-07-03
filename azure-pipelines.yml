@@ -3,19 +3,23 @@ trigger:
     include:
     - v4-master
 
-resources:
-- repo: self
-
 jobs:
 - job: windows_release
   pool:
     vmImage: 'vs2015-win2012r2'
-
   steps:
   - task: CmdLine@2
+    displayName: Checkout v4-master branch
     inputs:
       script: 'git checkout v4-master'
   - task: PowerShell@2
+    displayName: Compile
     inputs:
       filePath: '$(Build.SourcesDirectory)\scripts\build-windows\build.ps1'
       arguments: 'quick -Platform x64 -SpecificVisualStudioVersion 2015 -Configuration release -Version ($env:SemanticVersion)'
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Artifacts
+    inputs:
+      PathtoPublish: '$(Build.SourcesDirectory)\bin\'
+      ArtifactName: 'windows-net471-release'
+      publishLocation: 'Container'
