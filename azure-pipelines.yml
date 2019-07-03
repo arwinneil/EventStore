@@ -12,4 +12,4 @@ jobs:
   steps:
     - task: CmdLine@2
       inputs:
-        script: '.\build.cmd quick -Platform x64 -SpecificVisualStudioVersion 2015 -Configuration release -Version ($env:SemanticVersion)'
+        script: 'scripts\build-windows\build.ps1  quick -Platform x64 -SpecificVisualStudioVersion 2019 -Configuration release -Version ($env:SemanticVersion)'
