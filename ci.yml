@@ -45,4 +45,4 @@ jobs:
       envVars: |
         FrameworkPathOverride=/usr/lib/mono/4.7.1-api
         EventStoreBuildConfig=Debug
-      containerCommand: /work/build.sh
+      containerCommand: ls -a /work/
