@@ -4,8 +4,8 @@ trigger:
     - v4-master
 
 jobs:
-- job: windows_release
-  displayName: 'Windows x64 Debug'
+- job: windows_Release
+  displayName: 'Windows x64 Release'
   pool:
     vmImage: 'vs2015-win2012r2'
   steps:
@@ -14,17 +14,58 @@ jobs:
     displayName: Compile
     inputs:
       filePath: '$(Build.SourcesDirectory)\scripts\build-windows\build.ps1'
-      arguments: 'quick -Platform x64 -SpecificVisualStudioVersion 2015 -Configuration release -Version ($env:SemanticVersion)'
+      arguments: 'quick -Platform x64 -SpecificVisualStudioVersion 2015 -Configuration Release -Version ($env:SemanticVersion)'
 
   - task: PowerShell@2
-    displayName: Package
+    displayName: Test Windows x64 Release
     inputs:
-      filePath: '$(Build.SourcesDirectory)\scripts\package-windows\package-windows.ps1'
+      filePath: '$(Build.SourcesDirectory)\run_tests.ps1'
       arguments: '-Version ($env:SemanticVersion)'
-      
-  - task: PublishBuildArtifacts@1
-    displayName: Publish Artifacts
+
+  - task: PublishTestResults@2
+    displayName: Publish Test Results
+    condition: succeededOrFailed()
     inputs:
-      PathtoPublish: '$(Build.SourcesDirectory)/packages/'
-      ArtifactName: 'windows-x64'
-      publishLocation: 'Container'
+      testResultsFormat: 'NUnit'
+      testResultsFiles: '**/TestResult.xml'
+      testRunTitle: 'Windows x64 Release Test Results'
+
+- job: ubuntu1404_x64_release
+  displayName: 'Ubuntu 14.04 x64 Release'
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - bash: docker pull arwinneil/eventstore-v4-ci-ubuntu-14.04
+    displayName: Pull Docker image for build
+
+  - task: Docker@1
+    displayName: Compile in Ubuntu 14.04 Container
+    inputs:
+      command: 'Run an Image'
+      imageName: 'arwinneil/eventstore-v4-ci-ubuntu-14.04'
+      runInBackground: false
+      volumes: '$(Build.SourcesDirectory):/work'
+      envVars: |
+        EventStoreBuildConfig=Release
+      containerCommand: /work/build.sh
+      workingDirectory: '/work'
+  
+  - task: Docker@1
+    displayName: Test in Ubuntu 14.04 Container
+    inputs:
+      command: 'Run an Image'
+      imageName: 'arwinneil/eventstore-v4-ci-ubuntu-14.04'
+      runInBackground: false
+      volumes: '$(Build.SourcesDirectory):/work'
+      envVars: |
+        EventStoreBuildConfig=Release
+      containerCommand: /work/run_tc_tests.sh .
+      workingDirectory: '/work'
+
+  - task: PublishTestResults@2
+    displayName: Publish Test Results
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFormat: 'NUnit'
+      testResultsFiles: '**/TestResult.xml'
+      testRunTitle: ' Ubuntu 14.04  Test Results'
