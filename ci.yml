@@ -57,5 +57,5 @@ jobs:
       volumes: '$(Build.SourcesDirectory):/work'
       envVars: |
         EventStoreBuildConfig=Debug
-      containerCommand: /work/run_suppressed_output_tests.sh && /work/check-test-results.sh
+      containerCommand: /work/run_tc_tests.sh && /work/check-test-results.sh
       workingDirectory: '/work'
