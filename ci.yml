@@ -43,7 +43,6 @@ jobs:
       runInBackground: false
       volumes: '$(Build.SourcesDirectory):/work'
       envVars: |
-        FrameworkPathOverride=/usr/lib/mono/4.7.1-api
         EventStoreBuildConfig=Debug
       containerCommand: /work/build.sh
       workingDirectory: '/work/'
