@@ -36,11 +36,10 @@ jobs:
   steps:
   - bash: docker pull arwinneil/eventstore-v4-ci-ubuntu-14.04
     displayName: Pull Docker image for build
-    failOnStderr: false
   - task: Docker@1
     displayName: Compile in Ubuntu 14.04 Container
     inputs:
-      command: 'run'
+      command: 'Run an Image'
       imageName: 'eventstore/eventstore-ci-ubuntu-14.04:latest'
       runInBackground: false
       volumes: '$(Build.SourcesDirectory):/work'
