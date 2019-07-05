@@ -31,7 +31,7 @@ jobs:
 - job: ubuntu1404_x64_Debug
   displayName: 'Ubuntu 14.04 x64 Debug'
   pool:
-    vmImage: 'ubuntu-16.04 Debug'
+    vmImage: 'ubuntu-16.04'
   steps:
   - bash: docker pull arwinneil/eventstore-v4-ci-ubuntu-14.04
     displayName: Pull Docker image for build
