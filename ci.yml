@@ -59,3 +59,9 @@ jobs:
         EventStoreBuildConfig=Debug
       containerCommand: /work/run_tc_tests.sh . && /work/check-test-results.sh
       workingDirectory: '/work'
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'NUnit'
+      testResultsFiles: '**/TestResult.xml'
+      testRunTitle: 'Test Results'
