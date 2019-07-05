@@ -45,4 +45,4 @@ jobs:
       envVars: |
         EventStoreBuildConfig=Debug
       containerCommand: /work/build.sh
-      workingDirectory: '/work/'
+      workingDirectory: '/work'
