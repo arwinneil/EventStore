@@ -39,7 +39,7 @@ jobs:
     displayName: Compile in Ubuntu 14.04 Container
     inputs:
       command: 'Run an Image'
-      imageName: 'eventstore/eventstore-ci-ubuntu-14.04:latest'
+      imageName: 'arwinneil/eventstore-v4-ci-ubuntu-14.04'
       runInBackground: false
       volumes: '$(Build.SourcesDirectory):/work'
       envVars: |
