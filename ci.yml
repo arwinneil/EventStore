@@ -35,6 +35,7 @@ jobs:
   steps:
   - bash: docker pull arwinneil/eventstore-v4-ci-ubuntu-14.04
     displayName: Pull Docker image for build
+
   - task: Docker@1
     displayName: Compile in Ubuntu 14.04 Container
     inputs:
@@ -45,4 +46,16 @@ jobs:
       envVars: |
         EventStoreBuildConfig=Debug
       containerCommand: /work/build.sh
+      workingDirectory: '/work'
+  
+  - task: Docker@1
+    displayName: Test in Ubuntu 14.04 Container
+    inputs:
+      command: 'Run an Image'
+      imageName: 'arwinneil/eventstore-v4-ci-ubuntu-14.04'
+      runInBackground: false
+      volumes: '$(Build.SourcesDirectory):/work'
+      envVars: |
+        EventStoreBuildConfig=Debug
+      containerCommand: /work/run_suppressed_output_tests.sh && /work/check-test-results.sh
       workingDirectory: '/work'
